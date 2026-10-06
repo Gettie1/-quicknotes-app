@@ -7,7 +7,56 @@ const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const searchInput = document.querySelector("#search-input");
 
-let notes = [];
+const STORAGE_KEY = "quicknotes-notes";
+
+function loadNotes() {
+    try {
+        const savedNotes = localStorage.getItem(STORAGE_KEY);
+
+        if (savedNotes === null) {
+            return [];
+        }
+
+        const parsedNotes = JSON.parse(savedNotes);
+
+        if (!Array.isArray(parsedNotes)) {
+            return [];
+        }
+
+        return parsedNotes.filter((note) =>
+            note &&
+            typeof note.id === "number" &&
+            typeof note.text === "string" &&
+            ["personal", "work", "study"].includes(note.category) &&
+            typeof note.createdAt === "string"
+        );
+    } catch (error) {
+        console.error("Could not load saved notes:", error);
+        return [];
+    }
+}
+
+let notes = loadNotes();
+
+function saveNotes() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+    } catch (error) {
+        console.error("Could not save notes:", error);
+        errorMessage.textContent =
+            "Your notes could not be saved in this browser.";
+    }
+}
+
+function updateCount() {
+    if (notes.length === 0) {
+        noteCount.textContent = "You have no notes yet.";
+    } else if (notes.length === 1) {
+        noteCount.textContent = "You have 1 note.";
+    } else {
+        noteCount.textContent = `You have ${notes.length} notes.`;
+    }
+}
 
 function render() {
     notesList.replaceChildren();
@@ -31,15 +80,16 @@ function render() {
                 `category-${note.category}`
             );
 
-            const noteText = document.createElement("p");
-            noteText.classList.add("note-text");
-            noteText.textContent = note.text;
+            const text = document.createElement("p");
+            text.classList.add("note-text");
+            text.textContent = note.text;
 
             const categoryLabel = document.createElement("span");
             categoryLabel.classList.add(
                 "category-label",
                 `category-${note.category}`
             );
+
             categoryLabel.textContent =
                 note.category.charAt(0).toUpperCase() +
                 note.category.slice(1);
@@ -63,7 +113,7 @@ function render() {
             meta.appendChild(categoryLabel);
             meta.appendChild(deleteButton);
 
-            listItem.appendChild(noteText);
+            listItem.appendChild(text);
             listItem.appendChild(meta);
             listItem.appendChild(date);
 
@@ -83,11 +133,13 @@ function addNote(text, category) {
     };
 
     notes.push(note);
+    saveNotes();
     render();
 }
 
 function deleteNote(id) {
     notes = notes.filter((note) => note.id !== id);
+    saveNotes();
     render();
 }
 
@@ -107,6 +159,11 @@ noteForm.addEventListener("submit", (event) => {
         return;
     }
 
+    if (!["personal", "work", "study"].includes(noteCategory.value)) {
+        errorMessage.textContent = "Please select a valid category.";
+        return;
+    }
+
     addNote(text, noteCategory.value);
 
     noteInput.value = "";
@@ -115,16 +172,5 @@ noteForm.addEventListener("submit", (event) => {
 });
 
 searchInput.addEventListener("input", render);
-
-// Temporary count function; refined in Task 4.
-function updateCount() {
-    if (notes.length === 0) {
-        noteCount.textContent = "You have no notes yet.";
-    } else if (notes.length === 1) {
-        noteCount.textContent = "You have 1 note.";
-    } else {
-        noteCount.textContent = `You have ${notes.length} notes.`;
-    }
-}
 
 render();
