@@ -1,0 +1,238 @@
+
+/* Reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f3f6f9;
+    color: #263238;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #087f8c;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+/* Main content */
+main {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.section-card {
+    background-color: white;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+h2 {
+    margin-top: 0;
+    color: #087f8c;
+}
+
+/* Form */
+#note-form {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.form-group {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 140px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5dc;
+    border-radius: 5px;
+    font: inherit;
+    background-color: white;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #087f8c;
+    outline-offset: 1px;
+}
+
+/* Buttons */
+button {
+    padding: 11px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #087f8c;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #05616b;
+}
+
+.delete-btn {
+    background-color: #b42332;
+    padding: 7px 12px;
+}
+
+.delete-btn:hover {
+    background-color: #871a25;
+}
+
+/* Error and count */
+#error-message {
+    color: #c62828;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+#note-count {
+    color: #52616b;
+    font-size: 0.95rem;
+    margin: 15px 0;
+}
+
+/* Search */
+#search-input {
+    margin-top: 6px;
+}
+
+/* Notes list */
+#notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.note-card {
+    padding: 16px;
+    border: 1px solid #dce3e8;
+    border-left: 5px solid #087f8c;
+    border-radius: 7px;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.category-personal {
+    border-left-color: #00897b;
+}
+
+.category-work {
+    border-left-color: #8e2430;
+}
+
+.category-study {
+    border-left-color: #2463a6;
+}
+
+.note-text {
+    margin: 0 0 10px;
+    white-space: pre-wrap;
+}
+
+.note-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-label {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    background-color: #e6f4f4;
+    color: #075d63;
+}
+
+.category-label.category-work {
+    background-color: #fbe9eb;
+    color: #8e2430;
+}
+
+.category-label.category-study {
+    background-color: #e8f0fc;
+    color: #2463a6;
+}
+
+.note-date {
+    display: block;
+    margin-top: 8px;
+    color: #667781;
+    font-size: 0.85rem;
+}
+
+.empty-message {
+    color: #667781;
+    padding: 12px 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #e5ecef;
+    color: #52616b;
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    main {
+        margin: 18px auto;
+        padding: 0 12px;
+    }
+
+    .section-card {
+        padding: 18px;
+    }
+
+    #note-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    #note-form button {
+        width: 100%;
+    }
+}
